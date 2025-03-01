@@ -46,7 +46,12 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsLoading,
       (res) => {
         console.log("Inside the login function")
-        const { data } = res;
+        //if(res.data){
+          const { data } = res;
+          if(res.data == null){
+            ToastService.error(res.errorMessage || "An error occurred. Please try again.");
+            return;
+          }
         console.log(res);
         console.log(data)
         setUser(data.user);
@@ -54,6 +59,10 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         LocalStorage.set("user", data.user);
         LocalStorage.set("token", data.token);
         navigate("/chat"); // Redirect to the chat page after successful login
+        // }else{
+        //   ToastService.error(res.errorMessage || "An error occurred. Please try again.");
+        // }
+        
       },
       (error) => {
         ToastService.error(error);

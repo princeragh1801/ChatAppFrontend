@@ -9,7 +9,7 @@ const getSocket = () => {
  var token = LocalStorage.get('token');
  if(!token) return null;
  const connection = new signalR.HubConnectionBuilder()
- .withUrl("https://localhost:7234/chathub", { accessTokenFactory: () => token}) // Your SignalR server URL
+ .withUrl(import.meta.env.VITE_SOCKET_URI, { accessTokenFactory: () => token}) // Your SignalR server URL
  .build();
 
 // Start the connection and handle any errors
